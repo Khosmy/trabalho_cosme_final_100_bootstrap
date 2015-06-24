@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<title>Aluga</title>
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		
+		
+			<h1>Listando as Locações</h1>
+			{% for x in ListaEstados %}
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				  <div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="heading{{ forloop.counter }}">
+					  <h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+						  {{ x.Sigla }} - {{ x.Nome }}
+						</a>
+					  </h4>
+					</div>
+					<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ forloop.counter }}">
+					  <div class="panel-body">
+						  {% for y in ListaCidades %}
+							{% if y.Estado == x %}
+								<p><a href="{% url 'edita_cLiente' y.id %}">{{ y.Nome }}</a></p>
+							{% endif %}
+						  {% endfor %}
+					  </div>
+					</div>
+				  </div>
+				</div>
+			{% endfor %}
+			
+			<p><a href="{% url 'cadastra_cliente' %}">Cadastrar novo Cliente</a></p>
+			<p>Buscar Cliente</p>
+
+			<form action="{% url 'lista_Cliente' %}" method="POST">
+				{% csrf_token %}
+					<input type="text" name="query" size="50">
+					<input type="submit" value="Ir">
+					
+			</form>
+
+            <p><a href="{% url 'cadastra_Carro' %}">Cadastrar novo Carro</a></p>
+			<p>Buscar Carro</p>
+
+            <form action="{% url 'lista_Carro' %}" method="POST">
+				{% csrf_token %}
+					<input type="text" name="query" size="50">
+					<input type="submit" value="Ir">
+
+			</form>
+
+			<p><a href="{% url 'cadastra_Vaga' %}">Cadastrar nova Vaga</a></p>
+			<p>Buscar Vaga</p>
+
+            <form action="{% url 'lista_Vaga' %}" method="POST">
+				{% csrf_token %}
+					<input type="text" name="query" size="50">
+					<input type="submit" value="Ir">
+
+			</form>
+
+			
+
+	</body>
+</html>
